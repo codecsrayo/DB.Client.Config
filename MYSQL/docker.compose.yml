@@ -7,8 +7,10 @@ services:
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: October.2022
+        volumes:
+          - /data
         ports: 
-            - 3306:3306
+            - 33060:3306
 
 
     phpmyadmin:
@@ -22,4 +24,4 @@ services:
         PMA_PORT: 3306
         PMA_ARBITRARY: 1
       ports:
-        - 8080:80
+        - 8081:80
