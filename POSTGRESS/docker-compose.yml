@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  pgadmin:
+      container_name: PGADMIN
+      image: dpage/pgadmin4:latest
+      restart: unless-stopped
+      environment:
+        PGADMIN_DEFAULT_EMAIL: example@example.com
+        PGADMIN_DEFAULT_PASSWORD: 12345
+
+      volumes:
+        - pgadmin:/var/lib/pgadmin
+      ports:
+        - 80:80
+      networks:
+        - default
+      depends_on:
+        - database
+
+
+  database:
+    container_name: DATABASE
+    image: bitnami/postgresql:13.3.0
+    restart: always
+    user: root
+    volumes:
+      - ./db_docker:/bitnami/postgresql
+    ports:
+      - 5454:5432
+    environment:
+      - POSTGRES_USERNAME=root
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_DATABASE=test
+      - POSTGRES_HOST_AUTH_METHOD= "trust"
+      - POSTGRESQL_POSTGRES_PASSWORD= 12345
+
+volumes:
+   pgadmin:
